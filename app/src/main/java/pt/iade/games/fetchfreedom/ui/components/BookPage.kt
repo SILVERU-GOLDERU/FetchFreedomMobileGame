@@ -2,6 +2,7 @@ package pt.iade.games.fetchfreedom.ui.components
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -19,6 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -64,8 +67,12 @@ fun BookPage(
             modifier = Modifier.padding(16.dp)
         ) {
             Card(
-                modifier = Modifier.padding(bottom = 16.dp),
-                onClick = {}
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 16.dp),
+                colors = androidx.compose.material3.CardDefaults.cardColors(
+                    containerColor = Color(0xFFBAEAFF) // primaryContainerLight
+                ),
             ) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally
@@ -80,8 +87,8 @@ fun BookPage(
                     )
                     Text(
                         text = title,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 20.sp,
+                        style = MaterialTheme.typography.titleMedium,
+                        color = Color(0xFF001F29), // onPrimaryContainerLight
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         modifier = Modifier.padding(8.dp)
@@ -90,16 +97,25 @@ fun BookPage(
             }
             Text(
                 text = description,
-                fontSize = 16.sp,
+                style = MaterialTheme.typography.bodyMedium,
+                color = Color(0xFF171C1F), // onBackgroundLight
                 modifier = Modifier.padding(vertical = 8.dp),
                 maxLines = 3,
                 overflow = TextOverflow.Ellipsis
             )
             Button(
                 onClick = onClickVisitBook,
-                modifier = Modifier.padding(top = 16.dp)
+                modifier = Modifier.padding(top = 16.dp),
+                colors = androidx.compose.material3.ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFFCFE6F1), // secondaryContainerLight
+                    contentColor = Color(0xFF071E26) // onSecondaryContainerLight
+                ),
+                shape = androidx.compose.foundation.shape.RoundedCornerShape(8.dp)
             ) {
-                Text(text = "Visit book")
+                Text(
+                    text = "Visit book",
+                    style = MaterialTheme.typography.labelLarge
+                )
             }
         }
     }

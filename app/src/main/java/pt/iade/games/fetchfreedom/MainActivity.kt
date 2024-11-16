@@ -18,13 +18,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.compose.AppTheme
 import pt.iade.games.fetchfreedom.ui.components.Page1
 import pt.iade.games.fetchfreedom.ui.components.Page2
 import pt.iade.games.fetchfreedom.ui.components.Page3
 import pt.iade.games.fetchfreedom.ui.components.Page4
 import pt.iade.games.fetchfreedom.ui.components.Page5
 import pt.iade.games.fetchfreedom.ui.components.ProjectCard
-import pt.iade.games.fetchfreedom.ui.theme.MyApplicationTheme
 
 
 //make function that does page++ for a button then call it on storyboard.kt
@@ -88,5 +88,5 @@ fun Page6() {
 @Preview()
 @Composable
 fun MainViewPreviewOld() {
-    MyApplicationTheme { MainView("Android") }
+    AppTheme {  MainView("Android") }
 }

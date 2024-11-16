@@ -61,6 +61,8 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.ui.test.android)
     implementation(libs.androidx.compose.material)
+    implementation(libs.androidx.ui.text.google.fonts)
+    implementation(libs.androidx.foundation.android)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -68,4 +70,20 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    // Jetpack Compose BOM for version alignment
+    implementation(platform(libs.androidx.compose.bom.v20240100))
+
+    // Core Compose Libraries
+    implementation(libs.ui)
+    implementation(libs.material3)
+    implementation(libs.ui.tooling.preview)
+    debugImplementation(libs.ui.tooling)
+    testImplementation(libs.ui.test.junit4)
+
+    // Fonts (Google Fonts Support)
+    implementation(libs.ui.text.google.fonts)
+
+    // Other required Compose dependencies
+    implementation(libs.activity.compose)
+    implementation(libs.lifecycle.runtime.ktx)
 }
