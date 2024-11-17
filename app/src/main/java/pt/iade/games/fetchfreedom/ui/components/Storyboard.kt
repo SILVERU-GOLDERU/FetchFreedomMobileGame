@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import pt.iade.games.fetchfreedom.Vote1Trigger
 
+//unsued for now-later
 @Composable
 fun Page1(title: String, branching: String,){
     Box(modifier = Modifier.fillMaxWidth()) {

@@ -50,7 +50,7 @@ android {
 }
 
 dependencies {
-
+    implementation("androidx.navigation:navigation-compose:2.8.4")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -63,13 +63,19 @@ dependencies {
     implementation(libs.androidx.compose.material)
     implementation(libs.androidx.ui.text.google.fonts)
     implementation(libs.androidx.foundation.android)
+    implementation(libs.foundation.layout.android)
+    implementation(libs.foundation.layout.android)
+    implementation(libs.foundation.layout.android)
+    implementation(libs.foundation.layout.android)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
+    androidTestImplementation(platform(libs.androidx.compose.bom.v20240100))
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    implementation("androidx.compose.foundation:foundation")
+    implementation("androidx.compose.ui:ui-util")
     // Jetpack Compose BOM for version alignment
     implementation(platform(libs.androidx.compose.bom.v20240100))
 

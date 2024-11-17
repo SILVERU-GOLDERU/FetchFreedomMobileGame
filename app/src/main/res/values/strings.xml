@@ -5,5 +5,8 @@
     <string name="title_activity_page1">Page1</string>
     <string name="title_activity_page2">Page2</string>
     <string name="title_activity_book">BookActivity</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_login_screen">LoginScreen</string>
+    <string name="title_activity_main_screen">MainScreen</string>
     //translate things
 </resources>

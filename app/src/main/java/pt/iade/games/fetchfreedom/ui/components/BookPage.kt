@@ -100,7 +100,7 @@ fun BookPage(
                 style = MaterialTheme.typography.bodyMedium,
                 color = Color(0xFF171C1F), // onBackgroundLight
                 modifier = Modifier.padding(vertical = 8.dp),
-                maxLines = 3,
+                maxLines = 6,
                 overflow = TextOverflow.Ellipsis
             )
             Button(
@@ -113,7 +113,7 @@ fun BookPage(
                 shape = androidx.compose.foundation.shape.RoundedCornerShape(8.dp)
             ) {
                 Text(
-                    text = "Visit book",
+                    text = "Click",
                     style = MaterialTheme.typography.labelLarge
                 )
             }

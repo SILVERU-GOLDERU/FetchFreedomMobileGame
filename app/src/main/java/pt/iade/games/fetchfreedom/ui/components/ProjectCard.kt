@@ -28,6 +28,7 @@ import pt.iade.games.fetchfreedom.R
 import pt.iade.games.fetchfreedom.ProjectDetailActivity
 import pt.iade.games.fetchfreedom.Vote1Trigger
 
+//unsued for now-later
 @Composable
 fun ProjectCard(title: String, votes: Int,
                 modifier: Modifier = Modifier){
