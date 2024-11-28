@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">FetchFreedom</string>
     <string name="title_activity_vote1_trigger">Vote1Trigger</string>
     <string name="title_activity_project_detail">ProjectDetailActivity</string>
     <string name="title_activity_page1">Page1</string>
