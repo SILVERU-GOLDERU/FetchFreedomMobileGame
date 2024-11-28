@@ -76,8 +76,12 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation("androidx.compose.foundation:foundation")
     implementation("androidx.compose.ui:ui-util")
+    implementation (libs.fuel.android)
+    implementation (libs.fuel)
+    implementation (libs.fuel.json)
     // Jetpack Compose BOM for version alignment
     implementation(platform(libs.androidx.compose.bom.v20240100))
+
 
     // Core Compose Libraries
     implementation(libs.ui)
