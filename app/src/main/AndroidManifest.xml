@@ -22,10 +22,16 @@
         </intent-filter>
     </activity>
 
-    <activity
-        android:name=".BookActivity"
-        android:exported="true"
-        android:label="BookActivity" />
+       <activity
+           android:name=".BookActivity"
+           android:exported="true"
+           android:label="BookActivity" />
+
+       <activity
+           android:name="com.innoveworkshop.gametest.GameActivity"
+           android:exported="true"
+           android:label="BookActivity"
+           android:theme="@style/Theme.Material3.DayNight.NoActionBar"/>
 
 </application>
 

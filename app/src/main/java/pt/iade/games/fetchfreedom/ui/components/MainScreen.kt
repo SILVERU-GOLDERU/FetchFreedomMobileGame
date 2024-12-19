@@ -19,6 +19,7 @@ fun MainScreen(onLoginSuccess: () -> Unit) {
         LoginScreen { username, password ->
             if (username.isNotEmpty() && password.isNotEmpty()) {
                 isLoggedIn = true // Update login state
+
                 onLoginSuccess() // Trigger navigation to BookActivity
             }
         }

@@ -31,8 +31,7 @@ fun LoginScreen(onLogin: (String, String) -> Unit) {
 
     Box(
         modifier = Modifier
-            .fillMaxSize()
-            .background(Color(0xFFF5FAFD)), // backgroundLight
+            .fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
         Column(
@@ -52,14 +51,6 @@ fun LoginScreen(onLogin: (String, String) -> Unit) {
                 onValueChange = { username = it },
                 label = { Text("Username", color = Color(0xFF70787D)) }, // outlineLight
                 modifier = Modifier.fillMaxWidth(),
-                colors = androidx.compose.material3.TextFieldDefaults.outlinedTextFieldColors(
-                    containerColor = Color(0xFFF5FAFD), // backgroundLight
-                    focusedBorderColor = Color(0xFF0B6780), // primaryLight
-                    unfocusedBorderColor = Color(0xFF70787D), // outlineLight
-                    cursorColor = Color(0xFF0B6780), // primaryLight
-                    focusedLabelColor = Color(0xFF0B6780), // primaryLight
-                    unfocusedLabelColor = Color(0xFF70787D) // outlineLight
-                )
             )
             // Password Input Field
             OutlinedTextField(
@@ -67,23 +58,12 @@ fun LoginScreen(onLogin: (String, String) -> Unit) {
                 onValueChange = { password = it },
                 label = { Text("Password", color = Color(0xFF70787D)) }, // outlineLight
                 modifier = Modifier.fillMaxWidth(),
-                colors = androidx.compose.material3.TextFieldDefaults.outlinedTextFieldColors(
-                    containerColor = Color(0xFFF5FAFD), // backgroundLight
-                    focusedBorderColor = Color(0xFF0B6780), // primaryLight
-                    unfocusedBorderColor = Color(0xFF70787D), // outlineLight
-                    cursorColor = Color(0xFF0B6780), // primaryLight
-                    focusedLabelColor = Color(0xFF0B6780), // primaryLight
-                    unfocusedLabelColor = Color(0xFF70787D) // outlineLight
-                )
             )
             // Login Button
             Button(
                 onClick = { onLogin(username, password) },
                 modifier = Modifier.fillMaxWidth(),
-                colors = androidx.compose.material3.ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF0B6780), // primaryLight
-                    contentColor = Color(0xFFFFFFFF) // onPrimaryLight
-                )
+
             ) {
                 Text("Log In", style = MaterialTheme.typography.labelLarge)
             }
@@ -94,7 +74,9 @@ fun LoginScreen(onLogin: (String, String) -> Unit) {
 @Preview(showBackground = true)
 @Composable
 fun LoginScreenPreview() {
-    LoginScreen(
-        onLogin = { _, _ -> }
-    )
+    AppTheme {
+        LoginScreen(
+            onLogin = { _, _ -> }
+        )
+    }
 }

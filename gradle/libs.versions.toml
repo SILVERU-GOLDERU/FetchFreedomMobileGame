@@ -1,9 +1,11 @@
 [versions]
 agp = "8.6.0"
 composeBomVersion = "2024.01.00"
+constraintlayout = "2.2.0"
 fuel = "<2.3.1>"
 fuelAndroid = "<2.3.1>"
 fuelJson = "<2.3.1>"
+fuelVersion = "2.3.1"
 kotlin = "1.9.0"
 coreKtx = "1.10.1"
 junit = "4.13.2"
@@ -12,20 +14,27 @@ espressoCore = "3.5.0"
 lifecycleRuntimeKtx = "2.6.1"
 activityCompose = "1.8.0"
 composeBom = "2024.04.01"
+navigationCompose = "2.8.4"
 uiTestAndroid = "1.6.6"
 composeMaterial = "1.4.0"
 uiTextGoogleFonts = "1.7.5"
 foundationAndroid = "1.7.0"
 foundationLayoutAndroid = "1.7.0"
 foundationLayoutAndroidVersion = "1.7.2"
+appcompat = "1.7.0"
 
 [libraries]
 activity-compose = { module = "androidx.activity:activity-compose" }
 androidx-compose-bom-v20240100 = { module = "androidx.compose:compose-bom", version.ref = "composeBomVersion" }
+androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayout" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
-fuel = { module = "com.github.kittinunf.fuel:fuel", version.ref = "fuel" }
-fuel-android = { module = "com.github.kittinunf.fuel:fuel-android", version.ref = "fuelAndroid" }
-fuel-json = { module = "com.github.kittinunf.fuel:fuel-json", version.ref = "fuelJson" }
+androidx-foundation = { module = "androidx.compose.foundation:foundation" }
+androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
+androidx-ui-util = { module = "androidx.compose.ui:ui-util" }
+fuel = { module = "com.github.kittinunf.fuel:fuel", version = "2.3.1" }
+fuel-android = { module = "com.github.kittinunf.fuel:fuel-android", version = "2.3.1" }
+fuel-json = { module = "com.github.kittinunf.fuel:fuel-json", version = "2.3.1" }
+fuel-v231 = { module = "com.github.kittinunf.fuel:fuel", version.ref = "fuelVersion" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -52,6 +61,7 @@ ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
 androidx-foundation-layout-android = { group = "androidx.compose.foundation", name = "foundation-layout-android", version.ref = "foundationLayoutAndroid" }
 foundation-layout-android = { group = "androidx.compose.foundation", name = "foundation-layout-android", version.ref = "foundationLayoutAndroidVersion" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

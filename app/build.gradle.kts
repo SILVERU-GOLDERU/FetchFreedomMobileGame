@@ -50,7 +50,7 @@ android {
 }
 
 dependencies {
-    implementation("androidx.navigation:navigation-compose:2.8.4")
+    implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -64,36 +64,26 @@ dependencies {
     implementation(libs.androidx.ui.text.google.fonts)
     implementation(libs.androidx.foundation.android)
     implementation(libs.foundation.layout.android)
-    implementation(libs.foundation.layout.android)
-    implementation(libs.foundation.layout.android)
-    implementation(libs.foundation.layout.android)
+    implementation(libs.androidx.appcompat)
+    implementation("com.google.android.material:material:1.12.0")
+    implementation(libs.androidx.constraintlayout)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(libs.androidx.ui.test.junit4)
-    androidTestImplementation(platform(libs.androidx.compose.bom.v20240100))
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-    implementation("androidx.compose.foundation:foundation")
-    implementation("androidx.compose.ui:ui-util")
-    implementation (libs.fuel.android)
+    implementation(libs.androidx.foundation)
+    implementation(libs.androidx.ui.util)
+
     implementation (libs.fuel)
+    implementation (libs.fuel.android)
     implementation (libs.fuel.json)
-    // Jetpack Compose BOM for version alignment
-    implementation(platform(libs.androidx.compose.bom.v20240100))
 
 
-    // Core Compose Libraries
-    implementation(libs.ui)
-    implementation(libs.material3)
-    implementation(libs.ui.tooling.preview)
-    debugImplementation(libs.ui.tooling)
-    testImplementation(libs.ui.test.junit4)
+    //implementation (libs.fuel)
+    //implementation (libs.fuel.android)
+    //implementation (libs.fuel.json)
 
     // Fonts (Google Fonts Support)
     implementation(libs.ui.text.google.fonts)
-
-    // Other required Compose dependencies
-    implementation(libs.activity.compose)
-    implementation(libs.lifecycle.runtime.ktx)
 }

@@ -10,6 +10,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import com.example.compose.AppTheme
+import com.innoveworkshop.gametest.GameActivity
 import pt.iade.games.fetchfreedom.ui.components.LoginScreen
 import pt.iade.games.fetchfreedom.ui.components.MainScreen
 
@@ -18,7 +19,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             AppTheme {
-                MainScreen { navigateToBookActivity() }
+                MainScreen { navigateToGameActivity() }
             }
         }
     }
@@ -26,6 +27,11 @@ class MainActivity : ComponentActivity() {
     // Function to navigate to BookActivity
     private fun navigateToBookActivity() {
         startActivity(Intent(this, BookActivity::class.java))
+        finish() // Close MainActivity so it doesn't stay in the back stack
+    }
+
+    private fun navigateToGameActivity() {
+        startActivity(Intent(this, GameActivity::class.java))
         finish() // Close MainActivity so it doesn't stay in the back stack
     }
 }
