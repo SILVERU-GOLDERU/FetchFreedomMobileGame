@@ -24,11 +24,11 @@
 
     <Button
         android:id="@+id/back_button"
+        style="@style/CustomBackStyle"
         android:layout_width="55dp"
         android:layout_height="55dp"
         android:layout_margin="8dp"
         android:text="X"
-        android:textColor="#FD0808"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -59,6 +59,7 @@
 
         <Button
             android:id="@+id/left_button"
+            style="@style/CustomBlackStyle"
             android:layout_width="85dp"
             android:layout_height="70dp"
             android:layout_marginStart="30dp"
@@ -70,6 +71,7 @@
 
         <Button
             android:id="@+id/right_button"
+            style="@style/CustomBlackStyle"
             android:layout_width="85dp"
             android:layout_height="70dp"
             android:layout_marginStart="23dp"
