@@ -1,6 +1,7 @@
 package com.innoveworkshop.gametest
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
@@ -13,6 +14,7 @@ import com.innoveworkshop.gametest.engine.GameObject
 import com.innoveworkshop.gametest.engine.GameSurface
 import com.innoveworkshop.gametest.engine.Rectangle
 import com.innoveworkshop.gametest.engine.Vector
+import pt.iade.games.fetchfreedom.BookActivity
 import pt.iade.games.fetchfreedom.R
 
 class GameActivity : AppCompatActivity() {
@@ -42,6 +44,11 @@ class GameActivity : AppCompatActivity() {
 
         setupControls()
 
+        val backButton = findViewById<Button>(R.id.back_button)
+        backButton.setOnClickListener {
+            navigateToBookActivity() // Call the navigation method
+        }
+
         gameSurface?.viewTreeObserver?.addOnWindowFocusChangeListener { hasFocus ->
             if (!hasFocus) {
                 // App has lost focus (e.g., multitasking mode)
@@ -57,7 +64,10 @@ class GameActivity : AppCompatActivity() {
             }
         }
     }
-
+    private fun navigateToBookActivity() {
+        startActivity(Intent(this, BookActivity::class.java))
+        finish()
+    }
 
     @SuppressLint("ClickableViewAccessibility")
     private fun setupControls() {

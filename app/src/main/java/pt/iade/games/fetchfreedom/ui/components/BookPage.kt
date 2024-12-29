@@ -17,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -30,6 +31,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import pt.iade.games.fetchfreedom.R
+import androidx.compose.ui.graphics.BlurEffect
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.ui.draw.blur
+import androidx.compose.ui.layout.ContentScale
 
 @Composable
 fun BookPage(
@@ -41,7 +47,7 @@ fun BookPage(
     onSwipeRight: () -> Unit
 ) {
     var offset by remember { mutableFloatStateOf(0f) }
-
+    var showLargeImage by remember { mutableStateOf(false) }
     Box(
         contentAlignment = Alignment.TopCenter,
         modifier = Modifier
@@ -69,7 +75,8 @@ fun BookPage(
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 16.dp),
+                    .padding(bottom = 16.dp)
+                    .clickable { showLargeImage = true },
                 colors = androidx.compose.material3.CardDefaults.cardColors(
                     containerColor = Color(0xFFBAEAFF) // primaryContainerLight
                 ),
@@ -120,8 +127,29 @@ fun BookPage(
                 }
             }
         }
+        if (showLargeImage) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clickable { showLargeImage = false }
+            ) {
+
+                Image(
+                    painter = painterResource(imageId),
+                    contentDescription = "Enlarged Image",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(1f)
+                        .align(Alignment.Center),
+                    contentScale = ContentScale.Fit
+                )
+            }
+        }
+
     }
 }
+
+
 //
 //@Composable
 //@Preview(showBackground = true)
