@@ -36,7 +36,7 @@ fun BookPage(
     @DrawableRes imageId: Int,
     title: String,
     description: String,
-    onClickVisitBook: () -> Unit,
+    onClickVisitBook: (() -> Unit)? = null,
     onSwipeLeft: () -> Unit,
     onSwipeRight: () -> Unit
 ) {
@@ -103,33 +103,34 @@ fun BookPage(
                 maxLines = 6,
                 overflow = TextOverflow.Ellipsis
             )
-            Button(
-                onClick = onClickVisitBook,
-                modifier = Modifier.padding(top = 16.dp),
-                colors = androidx.compose.material3.ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFFCFE6F1), // secondaryContainerLight
-                    contentColor = Color(0xFF071E26) // onSecondaryContainerLight
-                ),
-                shape = androidx.compose.foundation.shape.RoundedCornerShape(8.dp)
-            ) {
-                Text(
-                    text = "Click",
-                    style = MaterialTheme.typography.labelLarge
-                )
+            if (onClickVisitBook != null) { // Conditionally display the button
+                Button(
+                    onClick = onClickVisitBook,
+                    modifier = Modifier.padding(top = 16.dp),
+                    colors = androidx.compose.material3.ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFFCFE6F1), // secondaryContainerLight
+                        contentColor = Color(0xFF071E26) // onSecondaryContainerLight
+                    ),
+                    shape = androidx.compose.foundation.shape.RoundedCornerShape(8.dp)
+                ) {
+                    Text(
+                        text = "Click",
+                        style = MaterialTheme.typography.labelLarge
+                    )
+                }
             }
         }
     }
 }
-
-@Composable
-@Preview(showBackground = true)
-fun BookPagePreview() {
-    BookPage(
-        imageId = R.drawable.placeholder_cover_image,
-        title = "This goes under the image",
-        description = "A bunch of text that is underneath the button. It is a description of the image above.",
-        onClickVisitBook = {},
-        onSwipeRight = {},
-        onSwipeLeft = {}
-    )
-}
+//
+//@Composable
+//@Preview(showBackground = true)
+//fun BookPagePreview() {
+//    BookPage(
+//        imageId = R.drawable.placeholder_cover_image,
+//        title = "This goes under the image",
+//        description = "A bunch of text that is underneath the button. It is a description of the image above.",
+//        onClickVisitBook = {},
+//        onSwipeRight = {},
+//        onSwipeLeft = {}
+//    )

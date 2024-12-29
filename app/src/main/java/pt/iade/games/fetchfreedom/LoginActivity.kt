@@ -28,8 +28,9 @@ class LoginActivity : ComponentActivity() {
                     // Fake validation: Check if username and password are not empty
                     if (username.isNotEmpty() && password.isNotEmpty()) {
                         Toast.makeText(this, "Logging in...", Toast.LENGTH_SHORT).show()
-                        val intent = Intent(this, GameActivity::class.java)
-                        startActivity(intent)
+
+//                        val intent = Intent(this, GameActivity::class.java)
+//                        startActivity(intent)
                         finish() // Close the login screen
                     } else {
                         Toast.makeText(this, "Invalid login!", Toast.LENGTH_SHORT).show()

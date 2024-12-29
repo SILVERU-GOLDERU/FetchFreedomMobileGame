@@ -65,7 +65,7 @@ dependencies {
     implementation(libs.androidx.foundation.android)
     implementation(libs.foundation.layout.android)
     implementation(libs.androidx.appcompat)
-    implementation("com.google.android.material:material:1.12.0")
+    implementation(libs.material)
     implementation(libs.androidx.constraintlayout)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

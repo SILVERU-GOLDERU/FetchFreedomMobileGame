@@ -1,6 +1,7 @@
 package pt.iade.games.fetchfreedom
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -28,6 +29,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.example.compose.AppTheme
+import com.innoveworkshop.gametest.GameActivity
 import pt.iade.games.fetchfreedom.ui.components.BookPage
 
 class BookActivity : ComponentActivity() {
@@ -51,11 +53,13 @@ fun bookPages(
     return listOf(
         {
             BookPage(
-                imageId = R.drawable.placeholder_cover_image,
+                imageId = R.drawable.gameboy,
                 title = "The Puppy Toy",
                 description = "The first memory you have is of you playing with this toy. You feel the nostalgia surrounding this toy like a cloud. You wonder why is it here in the sewers. Every possible reason you can think of makes you sad?",
                 onClickVisitBook = {
-                    Toast.makeText(context, "Toy...", Toast.LENGTH_LONG).show()
+                    // Navigate to GameActivity
+                    val intent = Intent(context, GameActivity::class.java)
+                    context.startActivity(intent)
                 },
                 onSwipeLeft = defaultOnSwipeLeft,
                 onSwipeRight = defaultOnSwipeRight
@@ -63,7 +67,7 @@ fun bookPages(
         },
         {
             BookPage(
-                imageId = R.drawable.placeholder_cover_image,
+                imageId = R.drawable.gameboy,
                 title = "The Dog Collar",
                 description = "You remember this collar like it was yesterday. It was your favourite after all. It was stylish and the black suited you. But now that you look at it... you prefer the red one you have now.",
                 onClickVisitBook = {
@@ -90,9 +94,7 @@ fun bookPages(
                 imageId = R.drawable.placeholder_cover_image,
                 title = "Tennis Ball",
                 description = "This tennis was bright green, now its yellow, faded and scratched, but it still bounced just right. As you nudge it with your nose, it feels smaller somehow, like it belongs to a different time",
-                onClickVisitBook = {
-                    Toast.makeText(context, "Visiting book...", Toast.LENGTH_LONG).show()
-                },
+                onClickVisitBook = null,
                 onSwipeLeft = defaultOnSwipeLeft,
                 onSwipeRight = defaultOnSwipeRight
             )

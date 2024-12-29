@@ -19,7 +19,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             AppTheme {
-                MainScreen { navigateToGameActivity() }
+                //here!!!!
+                MainScreen { navigateToBookActivity() }
             }
         }
     }
