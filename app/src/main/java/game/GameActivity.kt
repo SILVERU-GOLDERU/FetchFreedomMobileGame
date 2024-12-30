@@ -8,8 +8,8 @@ import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.innoveworkshop.gametest.assets.DroppingRectangle
-import com.innoveworkshop.gametest.assets.Humans
-import com.innoveworkshop.gametest.assets.Homeless
+import com.innoveworkshop.gametest.assets.Dogs
+import com.innoveworkshop.gametest.assets.Husky
 import com.innoveworkshop.gametest.engine.GameObject
 import com.innoveworkshop.gametest.engine.GameSurface
 import com.innoveworkshop.gametest.engine.Rectangle
@@ -184,8 +184,8 @@ class GameActivity : AppCompatActivity() {
         var rectangle: Rectangle? = null
         var floor: Rectangle? = null
         private val fallingItems = mutableListOf<DroppingRectangle>()
-        private val walkingHumans = mutableListOf<Humans>()
-        private val walkingHomeless = mutableListOf<Homeless>()
+        private val walkingDogs = mutableListOf<Dogs>()
+        private val walkingHusky = mutableListOf<Husky>()
 
         var moveLeft = false
         var moveRight = false
@@ -195,11 +195,11 @@ class GameActivity : AppCompatActivity() {
         private val deceleration = 1.5f // Deceleration
 
 
-        private var humanelapsedTime = 0f // Tracks elapsed time for spawning humans
-        private val humanspawnInterval = 0.4f // Spawn humans every 1 second
+        private var dogselapsedTime = 0f // Tracks elapsed time for spawning dogs
+        private val dogsspawnInterval = 0.4f // Spawn dogs every 1 second
 
-        private var homelesselapsedTime = 0f // Tracks elapsed time for spawning homeless
-        private val homelessspawnInterval = 2f // Spawn homeless every 1 second
+        private var huskyelapsedTime = 0f // Tracks elapsed time for spawning Husky
+        private val huskyspawnInterval = 2f // Spawn Husky every 1 second
 
         override fun onStart(surface: GameSurface?) {
             super.onStart(surface)
@@ -243,15 +243,15 @@ class GameActivity : AppCompatActivity() {
             surface!!.addGameObject(item) // Ensure surface is non-null
         }
 
-        fun spawnNewHuman() {
+        fun spawnNewDogs() {
 
             val screenWidth = surface!!.width
             val screenHeight = surface!!.height
-            val spawnX = if (Math.random() < 0.5) 0f else (screenWidth - 70f) //adjust human width fatness
+            val spawnX = if (Math.random() < 0.5) 0f else (screenWidth - 70f) //adjust Dogs width fatness
 
-            // Create a new human
-            val item = Humans(
-                Vector(spawnX, (screenHeight - 25f)), //adjust human height fatness
+            // Create a new Dogs
+            val item = Dogs(
+                Vector(spawnX, (screenHeight - 25f)), //adjust Dogs height fatness
                 25f,
                 70f,
                 2f,
@@ -259,36 +259,36 @@ class GameActivity : AppCompatActivity() {
                 this@GameActivity
             )
 
-            walkingHumans.add(item)
+            walkingDogs.add(item)
             surface!!.addGameObject(item) // Ensure surface is non-null
         }
 
 
-        fun spawnNewHomeless() {
+        fun spawnNewHusky() {
 
             val screenWidth = surface!!.width
             val screenHeight = surface!!.height
             val spawnX = if (Math.random() < 0.5) 0f else (screenWidth - 70f)
 
 
-            val item = Homeless(
+            val item = Husky(
                 Vector(spawnX, (screenHeight - 25f)),
                 25f,
                 70f,
                 2f,
-                Color.parseColor("#006400"),
+                Color.parseColor("#CCE5FF"),
                 this@GameActivity
             )
 
-            walkingHomeless.add(item)
-            surface!!.addGameObject(item) // Ensure surface is non-null
+            walkingHusky.add(item)
+            surface!!.addGameObject(item)
         }
 
 
         fun startGame() {
             isPaused = false
-            humanelapsedTime = 0f
-            homelesselapsedTime = 0f
+            dogselapsedTime = 0f
+            huskyelapsedTime = 0f
 
         }
         fun endGame() {
@@ -373,44 +373,44 @@ class GameActivity : AppCompatActivity() {
                 }
             }
 
-            humanelapsedTime += 0.016f // 60 FPS update rate
-            if (humanelapsedTime >= humanspawnInterval) {
-                spawnNewHuman()
-                humanelapsedTime = 0f
+            dogselapsedTime += 0.016f // 60 FPS update rate
+            if (dogselapsedTime >= dogsspawnInterval) {
+                spawnNewDogs()
+                dogselapsedTime = 0f
             }
 
-            homelesselapsedTime += 0.016f // 60 FPS update rate
-            if (homelesselapsedTime >= homelessspawnInterval) {
-                spawnNewHomeless()
-                homelesselapsedTime = 0f
+            huskyelapsedTime += 0.016f // 60 FPS update rate
+            if (huskyelapsedTime >= huskyspawnInterval) {
+                spawnNewHusky()
+                huskyelapsedTime = 0f
             }
 
-            //human spawn
-            val humanIterator = walkingHumans.iterator()
-            while (humanIterator.hasNext()) {
-                val human = humanIterator.next()
+            //dogs spawn
+            val dogsIterator = walkingDogs.iterator()
+            while (dogsIterator.hasNext()) {
+                val dogs = dogsIterator.next()
 
-                // Humans file handles their own physics
-                human.onFixedUpdate()
+                // dogs file handles their own physics
+                dogs.onFixedUpdate()
 
-                // human removal out of bounds
-                if (human.isOutOfBounds(surface!!.height.toFloat())) {
-                    human.destroy()
-                    humanIterator.remove()
+                // dogs removal out of bounds
+                if (dogs.isOutOfBounds(surface!!.height.toFloat())) {
+                    dogs.destroy()
+                    dogsIterator.remove()
                 }
             }
 
-            //homeless spawn
-            val homelessIterator = walkingHomeless.iterator()
-            while (homelessIterator.hasNext()) {
-                val homeless = homelessIterator.next()
+            //Husky spawn
+            val huskyIterator = walkingHusky.iterator()
+            while (huskyIterator.hasNext()) {
+                val husky = huskyIterator.next()
 
 
-                homeless.onFixedUpdate()
+                husky.onFixedUpdate()
 
-                if (homeless.isOutOfBounds(surface!!.height.toFloat())) {
-                    homeless.destroy()
-                    homelessIterator.remove()
+                if (husky.isOutOfBounds(surface!!.height.toFloat())) {
+                    husky.destroy()
+                    huskyIterator.remove()
                 }
             }
 

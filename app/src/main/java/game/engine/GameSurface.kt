@@ -10,8 +10,8 @@ import android.view.SurfaceView
 import com.innoveworkshop.gametest.GameActivity
 import com.innoveworkshop.gametest.assets.Stopwatch
 import com.innoveworkshop.gametest.assets.DroppingRectangle
-import com.innoveworkshop.gametest.assets.Humans
-import com.innoveworkshop.gametest.assets.Homeless
+import com.innoveworkshop.gametest.assets.Dogs
+import com.innoveworkshop.gametest.assets.Husky
 import java.util.Timer
 import java.util.TimerTask
 
@@ -35,8 +35,8 @@ class GameSurface @JvmOverloads constructor(
     }
     private var gameActivity: GameActivity? = null
 
-    private var destroyedHumansCount = 0
-    private var destroyedHomelessCount = 0
+    private var destroyedDogsCount = 0
+    private var destroyedHuskyCount = 0
 
     fun initializeWithMainActivity(activity: GameActivity) {
         this.gameActivity = activity
@@ -112,20 +112,20 @@ class GameSurface @JvmOverloads constructor(
         val y = height / 15f
         canvas.drawText(timeText, x, y, paint)
 
-        val humandestroyedText = "Humans Bricked: $destroyedHumansCount"
-        val humandestroyedTextWidth = paint.measureText(humandestroyedText)
-        canvas.drawText(humandestroyedText, width - humandestroyedTextWidth - 20f, height / 15f, paint)
+        val dogsdestroyedText = "Dogs Boned: $destroyedDogsCount"
+        val dogsdestroyedTextWidth = paint.measureText(dogsdestroyedText)
+        canvas.drawText(dogsdestroyedText, width - dogsdestroyedTextWidth - 20f, height / 15f, paint)
 
-        val homelessdestroyedText = "Homeless Bricked: $destroyedHomelessCount"
-        val homelessdestroyedTextWidth = paint.measureText(homelessdestroyedText)
-        canvas.drawText(homelessdestroyedText, width - homelessdestroyedTextWidth - 20f, height / 10f, paint)
+        val huskydestroyedText = "Husky Boned: $destroyedHuskyCount"
+        val huskydestroyedTextWidth = paint.measureText(huskydestroyedText)
+        canvas.drawText(huskydestroyedText, width - huskydestroyedTextWidth - 20f, height / 10f, paint)
     }
 
-    fun incrementDestroyedHumans() {
-        destroyedHumansCount++
+    fun incrementDestroyedDogs() {
+        destroyedDogsCount++
     }
-    fun incrementDestroyedHomeless() {
-        destroyedHomelessCount++
+    fun incrementDestroyedHusky() {
+        destroyedHuskyCount++
     }
 
     fun startStopwatch() {
@@ -157,28 +157,28 @@ class GameSurface @JvmOverloads constructor(
 
     private fun checkCollisions() {
         val droppingRectangles = gameObjects.filterIsInstance<DroppingRectangle>()
-        val humans = gameObjects.filterIsInstance<Humans>()
+        val dogs = gameObjects.filterIsInstance<Dogs>()
 
         for (rectangle in droppingRectangles) {
-            for (human in humans) {
-                if (rectangle.collidesWith(human)) {
-                    rectangle.onCollision(human)
-                    human.onCollision(rectangle)
+            for (dogs in dogs) {
+                if (rectangle.collidesWith(dogs)) {
+                    rectangle.onCollision(dogs)
+                    dogs.onCollision(rectangle)
 
-                    incrementDestroyedHumans()
+                    incrementDestroyedDogs()
                 }
             }
         }
 
-        val homeless = gameObjects.filterIsInstance<Homeless>()
+        val husky = gameObjects.filterIsInstance<Husky>()
 
         for (rectangle in droppingRectangles) {
-            for (homeless in homeless) {
-                if (rectangle.collidesWith(homeless)) {
-                    rectangle.onCollision(homeless)
-                    homeless.onCollision(rectangle)
+            for (husky in husky) {
+                if (rectangle.collidesWith(husky)) {
+                    rectangle.onCollision(husky)
+                    husky.onCollision(rectangle)
 
-                    incrementDestroyedHomeless()
+                    incrementDestroyedHusky()
                 }
             }
         }

@@ -17,27 +17,27 @@ class DroppingRectangle(
     private val worldScale = 50f
 
 
-    fun collidesWith(human: Humans): Boolean {
-        return position.x < human.position.x + human.width &&
-                position.x + width > human.position.x &&
-                position.y < human.position.y + human.height &&
-                position.y + height > human.position.y
+    fun collidesWith(dogs: Dogs): Boolean {
+        return position.x < dogs.position.x + dogs.width &&
+                position.x + width > dogs.position.x &&
+                position.y < dogs.position.y + dogs.height &&
+                position.y + height > dogs.position.y
     }
 
-    fun collidesWith(homeless: Homeless): Boolean {
-        return position.x < homeless.position.x + homeless.width &&
-                position.x + width > homeless.position.x &&
-                position.y < homeless.position.y + homeless.height &&
-                position.y + height > homeless.position.y
+    fun collidesWith(husky: Husky): Boolean {
+        return position.x < husky.position.x + husky.width &&
+                position.x + width > husky.position.x &&
+                position.y < husky.position.y + husky.height &&
+                position.y + height > husky.position.y
     }
 
-    fun onCollision(human: Humans) {
-        println("DroppingRectangle collided with Human")
+    fun onCollision(dogs: Dogs) {
+        println("DroppingRectangle collided with Dogs")
         this.destroy()
     }
 
-    fun onCollision(homeless: Homeless) {
-        println("DroppingRectangle collided with Homeless")
+    fun onCollision(husky: Husky) {
+        println("DroppingRectangle collided with husky")
         this.destroy()
     }
 
