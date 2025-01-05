@@ -1,4 +1,6 @@
 package pt.iade.games.fetchfreedom.ui.components
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -22,12 +24,17 @@ import androidx.compose.ui.unit.dp
 import com.example.compose.AppTheme
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import game.network.FuelClient
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(onLogin: (String, String) -> Unit) {
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+
+    // Access context inside the composable
+    val context = LocalContext.current
 
     Box(
         modifier = Modifier
@@ -61,9 +68,11 @@ fun LoginScreen(onLogin: (String, String) -> Unit) {
             )
             // Login Button
             Button(
-                onClick = { onLogin(username, password) },
+                onClick = {
+                    // Pass the context explicitly to the login function
+                    performLogin(context, username, password, onLogin)
+                },
                 modifier = Modifier.fillMaxWidth(),
-
             ) {
                 Text("Log In", style = MaterialTheme.typography.labelLarge)
             }
@@ -71,12 +80,22 @@ fun LoginScreen(onLogin: (String, String) -> Unit) {
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun LoginScreenPreview() {
-    AppTheme {
-        LoginScreen(
-            onLogin = { _, _ -> }
-        )
-    }
+private fun performLogin(
+    context: Context,
+    username: String,
+    password: String,
+    onLogin: (String, String) -> Unit
+) {
+    FuelClient.login(
+        context = context,
+        playerName = username,
+        playerPassword = password,
+        onSuccess = { message ->
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+            onLogin(username, password) // Trigger login logic in the parent
+        },
+        onFailure = { errorMessage ->
+            Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
+        }
+    )
 }
