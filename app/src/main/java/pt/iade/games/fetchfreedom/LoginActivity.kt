@@ -17,6 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.compose.AppTheme
 import com.innoveworkshop.gametest.GameActivity
+import game.network.FuelClient
 import pt.iade.games.fetchfreedom.ui.components.LoginScreen
 
 class LoginActivity : ComponentActivity() {
@@ -25,25 +26,29 @@ class LoginActivity : ComponentActivity() {
         setContent {
             AppTheme {
                 LoginScreen { username, password ->
-                    // Fake validation: Check if username and password are not empty
+                    // Validate user input
                     if (username.isNotEmpty() && password.isNotEmpty()) {
-                        Toast.makeText(this, "Logging in...", Toast.LENGTH_SHORT).show()
-
-//                        val intent = Intent(this, GameActivity::class.java)
-//                        startActivity(intent)
-                        finish() // Close the login screen
+                        // Call the server using FuelClient
+                        FuelClient.login(
+                            context = this,
+                            playerName = username,
+                            playerPassword = password,
+                            onSuccess = { message ->
+                                Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+                                // Navigate to the next activity
+                                val intent = Intent(this, GameActivity::class.java)
+                                startActivity(intent)
+                                finish() // Close the login screen
+                            },
+                            onFailure = { errorMessage ->
+                                Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
+                            }
+                        )
                     } else {
-                        Toast.makeText(this, "Invalid login!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Please enter valid credentials!", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
         }
     }
-}
-@Preview(showBackground = true)
-@Composable
-fun LoginPreview() {
-    LoginScreen(
-        onLogin = { _, _ -> }
-    )
 }

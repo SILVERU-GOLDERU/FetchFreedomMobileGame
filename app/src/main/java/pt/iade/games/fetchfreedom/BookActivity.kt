@@ -33,6 +33,10 @@ import com.innoveworkshop.gametest.GameActivity
 import pt.iade.games.fetchfreedom.ui.components.BookPage
 import pt.iade.games.fetchfreedom.ui.components.RelatedItem
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import game.network.FuelClient
+import org.json.JSONArray
 
 class BookActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,119 +57,186 @@ fun bookPages(
     defaultOnSwipeRight: () -> Unit = {},
     onRelatedItemClickGlobal: (String) -> Unit = {}
 ): List<@Composable () -> Unit> {
+    val collectedIds = remember { mutableStateOf(emptyList<Int>()) } // Holds IDs from the server
+    val isLoaded = remember { mutableStateOf(false) } // Indicates if data is loaded
+
+    val sharedPref =
+        context.getSharedPreferences("MyAppPreferences", Context.MODE_PRIVATE)
+
+    LaunchedEffect(Unit) {
+        FuelClient.getcollectables(
+            context = context,
+            playerID = sharedPref.getInt("playerID", -1),
+            onSuccess = { message ->
+                val jsonArray = JSONArray(message) // Parse message as JSON array
+                val ids = (0 until jsonArray.length()).map { jsonArray.getInt(it) } // Extract integers
+                collectedIds.value = ids
+                isLoaded.value = true
+            },
+            onFailure = { errorMessage ->
+                Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
+            }
+        )
+    }
+
+    val itemIdToPageIndex = mapOf(
+        "food" to 5,
+        "collar" to 1,
+        "bone" to 2,
+        "tennis" to 3,
+        "gameBoy" to 4
+    )
+
     return listOf(
         {
-            BookPage(
-
-                imageId = R.drawable.foodbackground,
-                enlargedImageId = R.drawable.food,
-                title = "Dog Food - Snowy Snax",
-                description = "Snowy Snax, it was your favorite. The smell, the taste, the way your owner used to pour it with a smile. You forgot that back in the day the snacks came in a red can. Now, the scent drifts faintly through the sewer, and it makes your chest ache more than your stomach growl. Funny how it still makes you feel warm inside, as if he is still here...\n" +
-                        "\n It doesnt look tasty though, you rather chew some rat bones instead to pass the hunger...",
-                sentimentalValue = 0.33f,
-                onClickVisitGameBoy = null,
-                onSwipeLeft = defaultOnSwipeLeft,
-                onSwipeRight = defaultOnSwipeRight,
-                relatedItems = listOf(
-                    RelatedItem("bone", R.drawable.bone, "Bone"),
-                ),
-                onRelatedItemClick = { item ->
-                    onRelatedItemClickGlobal(item.id)
-                }
-            )
-
+            if (isLoaded.value) {
+                val isVisible = 5 in collectedIds.value
+                BookPage(
+                    imageId = R.drawable.foodbackground,
+                    enlargedImageId = R.drawable.food,
+                    title = "Dog Food - Snowy Snax",
+                    description = if (isVisible) {
+                        "Snowy Snax, it was your favorite. The smell, the taste, the way your owner used to pour it with a smile. You forgot that back in the day the snacks came in a red can. Now, the scent drifts faintly through the sewer, and it makes your chest ache more than your stomach growl. Funny how it still makes you feel warm inside, as if he is still here..."
+                    } else {
+                        ""
+                    },
+                    sentimentalValue = 0.33f,
+                    onClickVisitGameBoy = null,
+                    onSwipeLeft = defaultOnSwipeLeft,
+                    onSwipeRight = defaultOnSwipeRight,
+                    relatedItems = listOf(
+                        RelatedItem("bone", R.drawable.bone, "Bone"),
+                    ),
+                    onRelatedItemClick = { item ->
+                        itemIdToPageIndex[item.id]?.let { newIndex ->
+                            Toast.makeText(context, "Navigating to page: $newIndex", Toast.LENGTH_SHORT).show()
+                        }
+                        onRelatedItemClickGlobal(item.id)
+                    }
+                )
+            }
         },
         {
-            BookPage(
-                imageId = R.drawable.collarbackground,
-                enlargedImageId = R.drawable.collar,
-                title = "The Dog Collar",
-                description = "It is your old collar, It excites you seeing this after a long time. It was your favourite after all. It was stylish and the red suited you. Maybe that is why your current collar is red.  But now that you look at it... you prefer the one you have now.\n" +
-                        "\n Why does it smell like food? *sniff* 'I want some Snowy Snax'",
-                sentimentalValue = 0.81f,
-                onClickVisitGameBoy = null,
-                onSwipeLeft = defaultOnSwipeLeft,
-                onSwipeRight = defaultOnSwipeRight,
-                relatedItems = listOf(
-                    RelatedItem("food", R.drawable.food, "Snacks"),
-                ),
-                onRelatedItemClick = { item ->
-                    onRelatedItemClickGlobal(item.id)
-                }
-
-            )
+            if (isLoaded.value) {
+                val isVisible = 1 in collectedIds.value
+                BookPage(
+                    imageId = R.drawable.collarbackground,
+                    enlargedImageId = R.drawable.collar,
+                    title = "The Dog Collar",
+                    description = if (isVisible) {
+                        "It is your old collar. It excites you seeing this after a long time. It was your favourite after all. It was stylish and the red suited you. Maybe that is why your current collar is red. But now that you look at it... you prefer the one you have now."
+                    } else {
+                        ""
+                    },
+                    sentimentalValue = 0.81f,
+                    onClickVisitGameBoy = null,
+                    onSwipeLeft = defaultOnSwipeLeft,
+                    onSwipeRight = defaultOnSwipeRight,
+                    relatedItems = listOf(
+                        RelatedItem("food", R.drawable.food, "Snacks"),
+                    ),
+                    onRelatedItemClick = { item ->
+                        itemIdToPageIndex[item.id]?.let { newIndex ->
+                            Toast.makeText(context, "Navigating to page: $newIndex", Toast.LENGTH_SHORT).show()
+                        }
+                        onRelatedItemClickGlobal(item.id)
+                    }
+                )
+            }
         },
         {
-            BookPage(
-                imageId = R.drawable.bonebackground,
-                enlargedImageId = R.drawable.bone,
-                title = "The Chewing Bone",
-                description = "You remember this bone like it was yesterday. It was stuck in the grime of the sewer, but it felt like treasure when your teeth sank into it. Back then, it was the only comfort you had back then. Is it the same bone though?\n" +
-                        "\n *Laugh* You remember a specific day where the bone was so dirty it looked green like your old tennis ball! Did it have something to do with spilled food? Hopefully it wasn't the Snowy Snax!",
-                sentimentalValue = 0.73f,
-                onClickVisitGameBoy = null,
-                onSwipeLeft = defaultOnSwipeLeft,
-                onSwipeRight = defaultOnSwipeRight,
-                relatedItems = listOf(
-                    RelatedItem("food", R.drawable.food, "Snacks"),
-                    RelatedItem("tennis", R.drawable.tennis, "Tennis")
-                ),
-                onRelatedItemClick = { item ->
-                    onRelatedItemClickGlobal(item.id)
-                }
-
-            )
+            if (isLoaded.value) {
+                val isVisible = 2 in collectedIds.value
+                BookPage(
+                    imageId = R.drawable.bonebackground,
+                    enlargedImageId = R.drawable.bone,
+                    title = "The Chewing Bone",
+                    description = if (isVisible) {
+                        "You remember this bone like it was yesterday. It was stuck in the grime of the sewer, but it felt like treasure when your teeth sank into it. Back then, it was the only comfort you had back then. Is it the same bone though?"
+                    } else {
+                        ""
+                    },
+                    sentimentalValue = 0.73f,
+                    onClickVisitGameBoy = null,
+                    onSwipeLeft = defaultOnSwipeLeft,
+                    onSwipeRight = defaultOnSwipeRight,
+                    relatedItems = listOf(
+                        RelatedItem("food", R.drawable.food, "Snacks"),
+                        RelatedItem("tennis", R.drawable.tennis, "Tennis")
+                    ),
+                    onRelatedItemClick = { item ->
+                        itemIdToPageIndex[item.id]?.let { newIndex ->
+                            Toast.makeText(context, "Navigating to page: $newIndex", Toast.LENGTH_SHORT).show()
+                        }
+                        onRelatedItemClickGlobal(item.id)
+                    }
+                )
+            }
         },
         {
-            BookPage(
-                imageId = R.drawable.tennisbackground,
-                enlargedImageId = R.drawable.tennis,
-                title = "The Tennis Ball",
-                description = "This tennis was bright green, now its yellow, faded and scratched, but it still bounced just right. As you nudge it with your nose, it feels smaller somehow, like it belongs to a different time. You are enormous, no wonder your old collar doesn't fit you anymore! You can almost swallow this ball whole!\n" +
-                        "\nSome of your best memories is playing games. You always preferred ones that made you run like playing catch. You have a little moment of introspection and notice how big you have gotten along the years... 'Is that why he abandoned me?'",
-                sentimentalValue = 0.23f,
-                onClickVisitGameBoy = null,
-                onSwipeLeft = defaultOnSwipeLeft,
-                onSwipeRight = defaultOnSwipeRight,
-                relatedItems = listOf(
-                    RelatedItem("gameBoy", R.drawable.gameboy, "GameBoy"),
-                    RelatedItem("collar", R.drawable.collar, "Collar")
-                ),
-                onRelatedItemClick = { item ->
-                    onRelatedItemClickGlobal(item.id)
-                }
-            )
+            if (isLoaded.value) {
+                val isVisible = 3 in collectedIds.value
+                BookPage(
+                    imageId = R.drawable.tennisbackground,
+                    enlargedImageId = R.drawable.tennis,
+                    title = "The Tennis Ball",
+                    description = if (isVisible) {
+                        "This tennis ball was bright green, now it’s yellow, faded and scratched, but it still bounced just right."
+                    } else {
+                        ""
+                    },
+                    sentimentalValue = 0.23f,
+                    onClickVisitGameBoy = null,
+                    onSwipeLeft = defaultOnSwipeLeft,
+                    onSwipeRight = defaultOnSwipeRight,
+                    relatedItems = listOf(
+                        RelatedItem("gameBoy", R.drawable.gameboy, "GameBoy"),
+                        RelatedItem("collar", R.drawable.collar, "Collar")
+                    ),
+                    onRelatedItemClick = { item ->
+                        itemIdToPageIndex[item.id]?.let { newIndex ->
+                            Toast.makeText(context, "Navigating to page: $newIndex", Toast.LENGTH_SHORT).show()
+                        }
+                        onRelatedItemClickGlobal(item.id)
+                    }
+                )
+            }
         },
         {
-            BookPage(
-                imageId = R.drawable.gameboybackground,
-                enlargedImageId = R.drawable.gameboy,
-                title = "The GameBoy",
-                description = "The first memory you have is of you watching your playing with this toy. You always wanted to try it. Unfortunatly looking at it reminds you of the day when still saw your owner in high regards. \n" +
-                        "\nBack then you were happy enough by just playing with your little bone. Nowadays dogs only play video games *sigh*\n" +
-                        "\nIt is a grey 1989 GameBoy. You wonder why is it here in the sewers, can you still play it? *click* It turns on! you cant contain your excitement! What was the game anyway? Something about bricks? No, it was a retro game about throwing bones to as many dogs as you can below! Feels like bricks thought...",
-                sentimentalValue = 0.99f,
-                onSwipeLeft = defaultOnSwipeLeft,
-                onSwipeRight = defaultOnSwipeRight,
-                relatedItems = listOf(
-                    RelatedItem("bone", R.drawable.bone, "Bone"),
-                ),
-                onRelatedItemClick = { item ->
-                    onRelatedItemClickGlobal(item.id)
-                },
-                onClickVisitGameBoy = {
-
-                    val intent = Intent(context, GameActivity::class.java)
-                    context.startActivity(intent)
-                },
-            )
+            if (isLoaded.value) {
+                val isVisible = 4 in collectedIds.value
+                BookPage(
+                    imageId = R.drawable.gameboybackground,
+                    enlargedImageId = R.drawable.gameboy,
+                    title = "The GameBoy",
+                    description = if (isVisible) {
+                        "The first memory you have is of you watching your owner playing with this toy."
+                    } else {
+                        ""
+                    },
+                    sentimentalValue = 0.99f,
+                    onSwipeLeft = defaultOnSwipeLeft,
+                    onSwipeRight = defaultOnSwipeRight,
+                    relatedItems = listOf(
+                        RelatedItem("bone", R.drawable.bone, "Bone"),
+                    ),
+                    onRelatedItemClick = { item ->
+                        itemIdToPageIndex[item.id]?.let { newIndex ->
+                            Toast.makeText(context, "Navigating to page: $newIndex", Toast.LENGTH_SHORT).show()
+                        }
+                        onRelatedItemClickGlobal(item.id)
+                    },
+                    onClickVisitGameBoy = if (isVisible) {
+                        {
+                            val intent = Intent(context, GameActivity::class.java)
+                            context.startActivity(intent)
+                        }
+                    } else {null}
+                )
+            }
         },
-
     )
 }
-
-
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainView(modifier: Modifier = Modifier) {
@@ -177,7 +248,7 @@ fun MainView(modifier: Modifier = Modifier) {
         "tennis" to 3,
         "bone" to 2,
         "collar" to 1,
-        "food" to 0,
+        "food" to 5,
     )
 
     fun onRelatedItemClick(itemId: String) {

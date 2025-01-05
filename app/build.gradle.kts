@@ -78,6 +78,9 @@ dependencies {
     implementation (libs.fuel)
     implementation (libs.fuel.android)
     implementation (libs.fuel.json)
+    implementation("com.github.kittinunf.fuel:fuel:2.3.1")
+    implementation("com.github.kittinunf.fuel:fuel-gson:2.3.1")
+    implementation("com.github.kittinunf.fuel:fuel-android:2.3.1") //Android
 
 
     //implementation (libs.fuel)
